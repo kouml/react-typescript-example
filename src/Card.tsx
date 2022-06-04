@@ -1,17 +1,20 @@
 import { useState, useEffect } from "react";
 
 export function Card() {
-  const [now, setNow] = useState(new Date());
+  const vocabs = ["Saab", "Volvo", "BMW"];
+  const randomElement = vocabs[Math.floor(Math.random() * vocabs.length)];
+  const [vocab, setVocab] = useState(randomElement);
+
   useEffect(
     function () {
       const intervalId = setInterval(function () {
-        setNow(new Date());
-      }, 1000);
+        setVocab(randomElement);
+      }, 2000);
       return function () {
         clearInterval(intervalId);
       };
     },
-    [now]
+    [vocab]
   );
-  return <div className="CardContainer">{now.toString()}</div>;
+  return <div className="CardContainer">{vocab}</div>;
 }

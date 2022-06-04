@@ -32,8 +32,3 @@ card.render(
     />
   </StrictMode>
 );
-
-const timerElement = document.getElementById("timer");
-const timer = ReactDOMClient.createRoot(timerElement);
-
-timer.render(<Timer />);
