@@ -1,0 +1,18 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.CardContainer {
+  font-family: sans-serif;
+  font-size: 30px;
+  text-align: center;
+}
+
+.BackCardDisplay {
+  display: none;
+}
+
+.BackCardExDisplay {
+  display: none;
+}
