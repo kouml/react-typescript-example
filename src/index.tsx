@@ -19,12 +19,7 @@ const card = ReactDOMClient.createRoot(cardElement);
 
 card.render(
   <StrictMode>
-    <Card
-      vocab={"単語"}
-      example={"例文"}
-      answer={"答え"}
-      answer_example={"例文2"}
-    />
+    <Card />
   </StrictMode>
 );
 card.render(
