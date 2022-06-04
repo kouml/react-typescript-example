@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 
 export class Card extends React.Component {
   constructor(props) {
@@ -17,15 +16,8 @@ export class Card extends React.Component {
     var res = new XMLHttpRequest();
     res.open("get", "./sample.csv", true);
     res.send(null);
-
-    res.onload = function () {
-      // alert(res.responseText);
-      //      alert();
-      // convertCSVtoArray(res.responseText);
-    };
-    res.onerror = function () {
-      // do something
-    };
+    var text: string = "test";
+    return text;
   }
 
   tick() {
@@ -35,28 +27,18 @@ export class Card extends React.Component {
   }
 
   tack() {
+    var random = Math.random();
     this.setState((vocab, example, answer, answer_example) => ({
-      vocab: "リフレッシュ",
-      example: "リフレッシュ",
-      answer: "リフレッシュ",
-      answer_example: "リフレッシュ"
+      vocab: random,
+      example: "refresh",
+      answer: "refresh",
+      answer_example: "refresh"
     }));
   }
 
   componentDidMount() {
-    this.interval = setInterval(() => this.tack(), 1000);
-    this.getCSV(); //最初に実行される
-
-    // this.state = {
-    //   vocab: "1リフレッシュ",
-    //   example: "1リフレッシュ",
-    //   answer: "1リフレッシュ",
-    //   answer_example: "1リフレッシュ"
-    // };
-    // axios.get("http://localhost:3001/users").then((results) => {
-    //   console.log(results);
-    //   this.setState({ users: results.data });
-    // });
+    // var text = this.getCSV();
+    this.interval = setInterval(() => this.tack(), 2000);
   }
 
   componentWillUnmount() {
