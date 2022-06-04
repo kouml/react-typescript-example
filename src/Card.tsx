@@ -11,6 +11,7 @@ export function Card() {
   var vocabs = read_vocab_from_file();
 
   const [vocab, setVocab] = useState("first");
+  const [answer, setAnswer] = useState("answer");
   let randomIndex = () => Math.floor(Math.random() * vocabs.length);
 
   useEffect(
@@ -24,5 +25,22 @@ export function Card() {
     },
     [vocab]
   );
-  return <div className="CardContainer">{vocab}</div>;
+
+  useEffect(
+    function () {
+      const intervalId = setInterval(function () {
+        setAnswer(vocabs[randomIndex()]);
+      }, 2000);
+      return function () {
+        clearInterval(intervalId);
+      };
+    },
+    [answer]
+  );
+  return (
+    <div className="CardContainer">
+      <div className="Vocab">{vocab}</div>
+      <div className="Answer">{answer}</div>
+    </div>
+  );
 }
