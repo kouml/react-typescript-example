@@ -1,14 +1,22 @@
 import { useState, useEffect } from "react";
 
+function read_vocab_from_file() {
+  var httpRequest = new XMLHttpRequest();
+  httpRequest.open("GET", "./sample.csv", false);
+  httpRequest.send();
+  return httpRequest.responseText.split("¥n")[0].split(",");
+}
+
 export function Card() {
-  const vocabs = ["Saab", "Volvo", "BMW"];
-  const randomElement = vocabs[Math.floor(Math.random() * vocabs.length)];
-  const [vocab, setVocab] = useState(randomElement);
+  var vocabs = read_vocab_from_file();
+
+  const [vocab, setVocab] = useState("first");
+  let randomIndex = () => Math.floor(Math.random() * vocabs.length);
 
   useEffect(
     function () {
       const intervalId = setInterval(function () {
-        setVocab(randomElement);
+        setVocab(vocabs[randomIndex()]);
       }, 2000);
       return function () {
         clearInterval(intervalId);
