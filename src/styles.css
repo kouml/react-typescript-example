@@ -3,6 +3,10 @@
   text-align: center;
 }
 
+.Answer {
+  display: "none";
+}
+
 .CardContainer {
   font-family: sans-serif;
   font-size: 30px;
