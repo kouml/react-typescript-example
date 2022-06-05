@@ -4,17 +4,12 @@ import { useState, useEffect } from "react";
 export function App() {
   const [counter, setCounter] = useState(0);
 
-  useEffect(
-    function () {
-      const intervalId = setInterval(function () {
-        setCounter(counter + 0.1);
-      }, 100);
-      return function () {
-        clearInterval(intervalId);
-      };
-    },
-    [counter]
-  );
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCounter((c) => c + 0.1);
+    }, 100);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="App">
