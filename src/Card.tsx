@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+var pinyin = require("chinese-to-pinyin");
 
 function read_vocab_from_file() {
   var httpRequest = new XMLHttpRequest();
@@ -31,6 +32,11 @@ export function Card() {
 
       const intervalId2 = setInterval(function () {
         toggleIsShown();
+        var msg = new SpeechSynthesisUtterance();
+        msg.lang = "zh";
+        msg.text = vocabs[randomIndex()][1];
+        window.speechSynthesis.speak(msg);
+        console.log(pinyin(msg.text));
       }, 1000);
 
       return function () {
