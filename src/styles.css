@@ -3,6 +3,11 @@
   text-align: center;
 }
 
+.MuiPaper-elevation1 {
+  text-align: center;
+  margin: 0 auto;
+  width: 80%;
+}
 .Answer {
   display: "none";
 }
