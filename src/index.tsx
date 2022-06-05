@@ -3,7 +3,7 @@ import { Timer } from "./Timer";
 import * as ReactDOMClient from "react-dom/client";
 
 import { App } from "./App";
-import { Card } from "./Card";
+import { CardAlt } from "./CardAlt";
 
 const rootElement = document.getElementById("root");
 const root = ReactDOMClient.createRoot(rootElement);
@@ -19,6 +19,6 @@ const card = ReactDOMClient.createRoot(cardElement);
 
 card.render(
   <StrictMode>
-    <Card />
+    <CardAlt />
   </StrictMode>
 );
