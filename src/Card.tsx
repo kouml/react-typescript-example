@@ -12,7 +12,7 @@ export function Card() {
 
   const [vocab, setVocab] = useState("first");
   const [answer, setAnswer] = useState("answer");
-  const [isShown, setIsShown] = useState(true);
+  const [isShown, setIsShown] = useState(false);
 
   const toggleIsShown = (event) => {
     // 👇️ toggle visibility
@@ -29,12 +29,13 @@ export function Card() {
         setAnswer(vocabs[index][1]);
       }, 2000);
 
-      setInterval(function () {
+      const intervalId2 = setInterval(function () {
         toggleIsShown();
       }, 1000);
 
       return function () {
         clearInterval(intervalId);
+        clearInterval(intervalId2);
       };
     },
     [vocab],
