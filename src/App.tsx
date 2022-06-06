@@ -6,15 +6,15 @@ export function App() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCounter((c) => c + 0.1);
-    }, 100);
+      setCounter((c) => c + 1);
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="App">
+      <div className="Counter">{counter} sec</div>
       <h1>Vocab App</h1>
-      <h2>Seconds: {counter}</h2>;
     </div>
   );
 }

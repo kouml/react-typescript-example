@@ -2,6 +2,10 @@
   font-family: sans-serif;
   text-align: center;
 }
+.Counter {
+  font-family: sans-serif;
+  margin-right: auto;
+}
 
 .MuiPaper-elevation1 {
   text-align: center;

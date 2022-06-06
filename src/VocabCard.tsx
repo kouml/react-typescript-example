@@ -6,9 +6,13 @@ import {
   CardActions,
   Button
 } from "@material-ui/core";
+import { sleep, read_vocab_from_file } from "./utils";
+
 import { createStyles, makeStyles } from "@material-ui/styles";
-import { useState, useEffect } from "react";
+import { useState, useEffect, React } from "react";
+
 var pinyin = require("chinese-to-pinyin");
+var vocabs = read_vocab_from_file();
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -37,53 +41,53 @@ const useStyles = makeStyles(() =>
   })
 );
 
-function read_vocab_from_file() {
-  var httpRequest = new XMLHttpRequest();
-  httpRequest.open("GET", "./sample.csv", false);
-  httpRequest.send();
-  return httpRequest.responseText.split("\n").map((x) => x.split(","));
-}
-
-export function CardAlt() {
+export function VocabCard() {
   const classes = useStyles();
-  var vocabs = read_vocab_from_file();
 
-  const [vocab, setVocab] = useState("first");
-  const [answer, setAnswer] = useState("answer");
-  const [pin, setPin] = useState("answer");
-  const [isShown, setIsShown] = useState(true);
+  const [vocab, setVocab] = useState("Hello");
+  const [answer, setAnswer] = useState("你好");
+  const [pin, setPin] = useState(pinyin("你好"));
+  const [isShown, setIsShown] = useState(false);
+  const [play, setPlay] = useState("再生");
 
-  const toggleIsShown = (event) => {
-    // 👇️ toggle visibility
+  const toggleIsShown = () => {
     setIsShown((current) => !current);
   };
 
   let randomIndex = () => Math.floor(Math.random() * vocabs.length);
-  useEffect(
-    function () {
-      const intervalId = setInterval(function () {
-        var index = randomIndex();
+
+  useEffect(() => {
+    const intervalId = setInterval(async () => {
+      var index = randomIndex();
+      console.log(play);
+      if (play == "停止") {
+        // invisible answer
+        toggleIsShown();
         setVocab(vocabs[index][0]);
+        await sleep(3000);
+        // visible answer
+        toggleIsShown();
         setAnswer(vocabs[index][1]);
         setPin(pinyin(vocabs[index][1]));
-      }, 2000);
+        var msg = new SpeechSynthesisUtterance();
+        msg.lang = "zh";
+        msg.text = vocabs[index][1];
+        window.speechSynthesis.speak(msg);
+        console.log(pinyin(msg.text));
+      }
+    }, 6000);
 
-      const intervalId2 = setInterval(function () {
-        toggleIsShown();
-        // var msg = new SpeechSynthesisUtterance();
-        // msg.lang = "zh";
-        // msg.text = answer;
-        // window.speechSynthesis.speak(msg);
-        // console.log(pinyin(msg.text));
-      }, 2000);
+    // document.addEventListener("keydown", function (e) {
+    //   if (e.key === "Enter" || e.key === "Space") {
+    //     setIsStopped((current) => !current);
+    //     console.log(isStopped);
+    //   }
+    // });
 
-      return function () {
-        clearInterval(intervalId);
-        clearInterval(intervalId2);
-      };
-    },
-    [vocab]
-  );
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [play]);
 
   return (
     <Box className={classes.root}>
@@ -112,6 +116,15 @@ export function CardAlt() {
             {pin}
           </Typography>
         </CardContent>{" "}
+      </Card>
+      <Card>
+        <Button
+          onClick={() => {
+            setPlay((current) => (current == "再生" ? "停止" : "再生"));
+          }}
+        >
+          {play}
+        </Button>
       </Card>
     </Box>
   );
