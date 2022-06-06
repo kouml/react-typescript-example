@@ -48,7 +48,7 @@ export function VocabCard() {
   const [answer, setAnswer] = useState("你好");
   const [pin, setPin] = useState(pinyin("你好"));
   const [isShown, setIsShown] = useState(false);
-  const [play, setPlay] = useState("再生");
+  const [play, setPlay] = useState("Play");
 
   const toggleIsShown = () => {
     setIsShown((current) => !current);
@@ -60,7 +60,7 @@ export function VocabCard() {
     const intervalId = setInterval(async () => {
       var index = randomIndex();
       console.log(play);
-      if (play == "停止") {
+      if (play == "Play") {
         // invisible answer
         toggleIsShown();
         setVocab(vocabs[index][0]);
@@ -120,7 +120,7 @@ export function VocabCard() {
       <Card>
         <Button
           onClick={() => {
-            setPlay((current) => (current == "再生" ? "停止" : "再生"));
+            setPlay((current) => (current == "Play" ? "Pause" : "Play"));
           }}
         >
           {play}
