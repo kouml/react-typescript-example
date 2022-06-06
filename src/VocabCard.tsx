@@ -6,13 +6,13 @@ import {
   CardActions,
   Button
 } from "@material-ui/core";
-import { sleep, read_vocab_from_file } from "./utils";
+import { sleep, readVocabFromCSV, readloudText } from "./utils";
 
 import { createStyles, makeStyles } from "@material-ui/styles";
 import { useState, useEffect, React } from "react";
 
 var pinyin = require("chinese-to-pinyin");
-var vocabs = read_vocab_from_file();
+var vocabs = readVocabFromCSV("./sample.csv");
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -68,11 +68,7 @@ export function VocabCard() {
         toggleIsShown();
         setAnswer(vocabs[index][1]);
         setPin(pinyin(vocabs[index][1]));
-        var msg = new SpeechSynthesisUtterance();
-        msg.lang = "zh";
-        msg.text = vocabs[index][1];
-        window.speechSynthesis.speak(msg);
-        console.log(pinyin(msg.text));
+        readloudText(vocabs[index][1]);
       }
     }, 6000);
 
