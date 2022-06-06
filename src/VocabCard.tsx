@@ -48,7 +48,7 @@ export function VocabCard() {
   const [answer, setAnswer] = useState("你好");
   const [pin, setPin] = useState(pinyin("你好"));
   const [isShown, setIsShown] = useState(false);
-  const [play, setPlay] = useState("Play");
+  const [play, setPlay] = useState("PLAYING");
 
   const toggleIsShown = () => {
     setIsShown((current) => !current);
@@ -59,8 +59,7 @@ export function VocabCard() {
   useEffect(() => {
     const intervalId = setInterval(async () => {
       var index = randomIndex();
-      console.log(play);
-      if (play == "Play") {
+      if (play == "PLAYING") {
         // invisible answer
         toggleIsShown();
         setVocab(vocabs[index][0]);
@@ -76,13 +75,6 @@ export function VocabCard() {
         console.log(pinyin(msg.text));
       }
     }, 6000);
-
-    // document.addEventListener("keydown", function (e) {
-    //   if (e.key === "Enter" || e.key === "Space") {
-    //     setIsStopped((current) => !current);
-    //     console.log(isStopped);
-    //   }
-    // });
 
     return () => {
       clearInterval(intervalId);
@@ -120,10 +112,13 @@ export function VocabCard() {
       <Card>
         <Button
           onClick={() => {
-            setPlay((current) => (current == "Play" ? "Pause" : "Play"));
+            setPlay((current) =>
+              current == "PLAYING" ? "PAUSING" : "PLAYING"
+            );
+            console.log(play);
           }}
         >
-          {play}
+          State:{play}
         </Button>
       </Card>
     </Box>
