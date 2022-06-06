@@ -51,9 +51,9 @@ export function CardAlt() {
   const [vocab, setVocab] = useState("first");
   const [answer, setAnswer] = useState("answer");
   const [pin, setPin] = useState("answer");
-  const [isShown, setIsShown] = useState(false);
+  const [isShown, setIsShown] = useState(true);
 
-  const toggleIsShown = () => {
+  const toggleIsShown = (event) => {
     // 👇️ toggle visibility
     setIsShown((current) => !current);
   };
@@ -75,16 +75,14 @@ export function CardAlt() {
         // msg.text = answer;
         // window.speechSynthesis.speak(msg);
         // console.log(pinyin(msg.text));
-      }, 1000);
+      }, 2000);
 
       return function () {
         clearInterval(intervalId);
         clearInterval(intervalId2);
       };
     },
-    [vocab],
-    [answer],
-    [pin]
+    [vocab]
   );
 
   return (
@@ -93,16 +91,23 @@ export function CardAlt() {
         <CardContent>
           <Typography variant="h3">{vocab}</Typography>
         </CardContent>
+      </Card>
+
+      <Card>
         <CardContent>
           <Typography
             variant="h3"
-            style={{ display: isShown ? "block" : "none" }}
+            style={{ visibility: isShown ? "hidden" : "visible" }}
           >
             {answer}
           </Typography>
+        </CardContent>{" "}
+      </Card>
+      <Card>
+        <CardContent>
           <Typography
             variant="h3"
-            style={{ display: isShown ? "block" : "none" }}
+            style={{ visibility: isShown ? "hidden" : "visible" }}
           >
             {pin}
           </Typography>
