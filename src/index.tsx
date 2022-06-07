@@ -4,6 +4,7 @@ import * as ReactDOMClient from "react-dom/client";
 
 import { App } from "./App";
 import { VocabCard } from "./VocabCard";
+import { AnswerCard } from "./AnswerCard";
 
 const rootElement = document.getElementById("root");
 const root = ReactDOMClient.createRoot(rootElement);
@@ -18,3 +19,8 @@ const cardElement = document.getElementById("card");
 const card = ReactDOMClient.createRoot(cardElement);
 
 card.render(<VocabCard />);
+
+const answerElement = document.getElementById("answer");
+const answer = ReactDOMClient.createRoot(answerElement);
+
+answer.render(<AnswerCard />);

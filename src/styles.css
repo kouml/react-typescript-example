@@ -21,3 +21,9 @@
   font-size: 30px;
   text-align: center;
 }
+
+#outlined-uncontrolled {
+  text-align: center;
+  margin: 0 auto;
+  width: 80%;
+}
