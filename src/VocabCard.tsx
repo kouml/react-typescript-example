@@ -3,9 +3,6 @@ import {
   Card,
   CardContent,
   Typography,
-  CardActions,
-  FormGroup,
-  FormControlLabel,
   Button,
   Checkbox
 } from "@material-ui/core";
@@ -14,7 +11,9 @@ import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import { sleep, readVocabFromCSV, readloudText } from "./utils";
 
 import { createStyles, makeStyles } from "@material-ui/styles";
-import { useState, useEffect, React } from "react";
+import { useState, useEffect, useContext, React } from "react";
+
+import { AnswerCard } from "./AnswerCard";
 
 var pinyin = require("chinese-to-pinyin");
 var vocabs = readVocabFromCSV("./sample.csv");
@@ -25,23 +24,6 @@ const useStyles = makeStyles(() =>
       display: "flex",
       flexWrap: "wrap",
       "& > *": {}
-    },
-    marginAutoContainer: {
-      width: 500,
-      height: 80,
-      display: "flex",
-      backgroundColor: "gold"
-    },
-    marginAutoItem: {
-      margin: "auto"
-    },
-    alignItemsAndJustifyContent: {
-      width: 500,
-      height: 80,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      backgroundColor: "pink"
     }
   })
 );
@@ -69,16 +51,16 @@ export function VocabCard() {
         // invisible answer
         toggleIsShown();
         setVocab(vocabs[index][0]);
-        await sleep(3000);
+        await sleep(1000);
         // visible answer
         toggleIsShown();
         if (isMute === false) {
           setAnswer(vocabs[index][1]);
           setPin(pinyin(vocabs[index][1]));
-          readloudText(vocabs[index][1]);
+          await readloudText(vocabs[index][1]);
         }
       }
-    }, 6000);
+    }, 2000);
 
     return () => {
       clearInterval(intervalId);

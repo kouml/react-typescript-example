@@ -9,9 +9,21 @@ export function readVocabFromCSV(fileName: string) {
   return httpRequest.responseText.split("\n").map((x) => x.split(","));
 }
 
-export function readloudText(text: string) {
-  var msg = new SpeechSynthesisUtterance();
-  msg.lang = "zh";
-  msg.text = text;
-  window.speechSynthesis.speak(msg);
+export async function readloudText(text: string) {
+  var speech = new SpeechSynthesisUtterance();
+  speech.lang = "zh";
+  speech.text = text;
+  // window.speechSynthesis.speak(msg);
+  speechSynthesis.speak(speech);
+  return new Promise((resolve) => {
+    speech.onend = resolve;
+  });
+
+  // speech.onend = function (event) {
+  //   console.log(
+  //     "Utterance has finished being spoken after " +
+  //       event.elapsedTime +
+  //       " seconds."
+  //   );
+  // };
 }
