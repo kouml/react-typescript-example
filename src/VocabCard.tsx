@@ -37,6 +37,7 @@ export function VocabCard() {
   const [isShown, setIsShown] = useState(false);
   const [play, setPlay] = useState("PLAYING");
   const [isMute, setIsMute] = useState(false);
+  const [next, setNext] = useState(false);
 
   const toggleIsShown = () => {
     setIsShown((current) => !current);
@@ -45,27 +46,47 @@ export function VocabCard() {
   let randomIndex = () => Math.floor(Math.random() * vocabs.length);
 
   useEffect(() => {
-    const intervalId = setInterval(async () => {
-      var index = randomIndex();
-      if (play == "PLAYING") {
-        // invisible answer
-        toggleIsShown();
-        setVocab(vocabs[index][0]);
-        await sleep(1000);
-        // visible answer
-        toggleIsShown();
-        if (isMute === false) {
-          setAnswer(vocabs[index][1]);
-          setPin(pinyin(vocabs[index][1]));
-          await readloudText(vocabs[index][1]);
+    var intervalId;
+    if (next) {
+      intervalId = setInterval(async () => {
+        var index = randomIndex();
+        if (play == "PLAYING") {
+          // invisible answer
+          toggleIsShown();
+          setVocab(vocabs[index][0]);
+          await sleep(8000);
+          // visible answer
+          toggleIsShown();
+          if (isMute === false) {
+            setAnswer(vocabs[index][1]);
+            setPin(pinyin(vocabs[index][1]));
+            await readloudText(vocabs[index][1]);
+          }
         }
-      }
-    }, 2000);
+      }, 14000);
+    } else {
+      intervalId = setInterval(async () => {
+        var index = randomIndex();
+        if (play == "PLAYING") {
+          // invisible answer
+          toggleIsShown();
+          setVocab(vocabs[index][0]);
+          await sleep(8000);
+          // visible answer
+          toggleIsShown();
+          if (isMute === false) {
+            setAnswer(vocabs[index][1]);
+            setPin(pinyin(vocabs[index][1]));
+            await readloudText(vocabs[index][1]);
+          }
+        }
+      }, 14000);
+    }
 
     return () => {
       clearInterval(intervalId);
     };
-  }, [play, isMute]);
+  }, [play, isMute, next]);
 
   return (
     <Box className={classes.root}>
@@ -94,6 +115,16 @@ export function VocabCard() {
             {pin}
           </Typography>
         </CardContent>
+      </Card>
+      <Card>
+        <Button
+          onClick={() => {
+            setNext((current) => true);
+            console.log(next);
+          }}
+        >
+          Next Button
+        </Button>
       </Card>
       <Card>
         <Button
