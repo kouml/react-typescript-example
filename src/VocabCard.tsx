@@ -4,8 +4,13 @@ import {
   CardContent,
   Typography,
   CardActions,
-  Button
+  FormGroup,
+  FormControlLabel,
+  Button,
+  Checkbox
 } from "@material-ui/core";
+import VolumeMuteIcon from "@mui/icons-material/VolumeMute";
+import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import { sleep, readVocabFromCSV, readloudText } from "./utils";
 
 import { createStyles, makeStyles } from "@material-ui/styles";
@@ -49,6 +54,7 @@ export function VocabCard() {
   const [pin, setPin] = useState(pinyin("你好"));
   const [isShown, setIsShown] = useState(false);
   const [play, setPlay] = useState("PLAYING");
+  const [isMute, setIsMute] = useState(false);
 
   const toggleIsShown = () => {
     setIsShown((current) => !current);
@@ -66,16 +72,18 @@ export function VocabCard() {
         await sleep(3000);
         // visible answer
         toggleIsShown();
-        setAnswer(vocabs[index][1]);
-        setPin(pinyin(vocabs[index][1]));
-        readloudText(vocabs[index][1]);
+        if (isMute === false) {
+          setAnswer(vocabs[index][1]);
+          setPin(pinyin(vocabs[index][1]));
+          readloudText(vocabs[index][1]);
+        }
       }
     }, 6000);
 
     return () => {
       clearInterval(intervalId);
     };
-  }, [play]);
+  }, [play, isMute]);
 
   return (
     <Box className={classes.root}>
@@ -93,7 +101,7 @@ export function VocabCard() {
           >
             {answer}
           </Typography>
-        </CardContent>{" "}
+        </CardContent>
       </Card>
       <Card>
         <CardContent>
@@ -103,7 +111,7 @@ export function VocabCard() {
           >
             {pin}
           </Typography>
-        </CardContent>{" "}
+        </CardContent>
       </Card>
       <Card>
         <Button
@@ -116,6 +124,14 @@ export function VocabCard() {
         >
           State:{play}
         </Button>
+        <Checkbox
+          icon={<VolumeUpIcon />}
+          checkedIcon={<VolumeMuteIcon />}
+          checked={isMute}
+          onClick={() => {
+            setIsMute((current) => !current);
+          }}
+        />
       </Card>
     </Box>
   );

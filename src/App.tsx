@@ -6,7 +6,7 @@ export function App() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCounter((c) => c + 1);
+      setCounter((c: number) => c + 1);
     }, 1000);
     return () => clearInterval(interval);
   }, []);
